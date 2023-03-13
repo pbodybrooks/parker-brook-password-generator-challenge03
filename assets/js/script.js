@@ -104,7 +104,6 @@ function generatePassword(){
   // now i am creating a new variable to store the final password. i set it as an emptry string for now, but it will be filled by picking and pulling random characters from the generatedPassword "bucket".
   var finalPassword = '';
 
-
   // this for loop iterates through the length of the previously specified passwordLength, filling in each index with a randomly selected index of generatedPassword.
   // randomIndex is a randomly generated number created using math.floor and math.random multiplied by the length of the generatedPassword array
   // finalPassword is then filled using the random index value of(generatedPassword)
@@ -116,7 +115,6 @@ function generatePassword(){
   // return this generated password for use in writing back to the HTML
   return finalPassword;
 }
-
 
 // Write password to the #password input
 // the variable "password" is now containing the generatePassword function's return, finalPassword.
