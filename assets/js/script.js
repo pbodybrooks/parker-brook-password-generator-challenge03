@@ -91,7 +91,7 @@ function generatePassword(){
     generatePassword();
   }
   
-  // now that all the parameters pertaining to password generation have been gathered from the user, we can store the values as properties of the object passwordParameters to be used later.
+  // now that all the parameters pertaining to password generation have been gathered from the user, i can store the values as properties of the object passwordParameters to be used later.
   var passwordParameters = {
     useNumbers: useNumbers,
     useCharacters: useCharacters,
@@ -99,46 +99,60 @@ function generatePassword(){
     useLowercase: useLowercase,
   };
 
-  // this variable is set as an empty string to begin with and will be used as bucket holding all characters associated with the character types the user specified
+  // this variable is set as an empty string to begin with and will be used as "bucket" to hold all characters associated with the character types the user specified.
+  // i'm doing it this way so that I can use the "bucket" as a separate container from the character arrays ensuring the generated password will never contain characters from a type the user did not want.
   var generatedPassword = '';
 
-  if (passwordParameters.useCharacters){
-    for (var i=0; i<characters.length; i++){
-      generatedPassword += characters[i];
-    }
-  }
-
+  // next, i use an if statement validate the user's previous inputs and add the requested characters to the "generatedPassword" bucket via the for loop.
+  // if user clicked "OK" on the numbers confirm() prompt, the for loop will iterate through the numbers array, adding the contents of each index to the generatedPassword bucket.
   if (passwordParameters.useNumbers){
     for (var i=0; i<numbers.length; i++){
       generatedPassword += numbers[i];
     }
   }
 
+  // if the user clicked "OK" in the special characters confirm() prompt, the for loop will iterate through the characters array, adding the contents of each index to the generatedPassword bucket.
+  if (passwordParameters.useCharacters){
+    for (var i=0; i<characters.length; i++){
+      generatedPassword += characters[i];
+    }
+  }
+
+  // if the user clicked "OK" in the uppercase letters confirm() prompt, the for loop will iterate through the lettersUppercase array, adding the contents of each index to the generatedPassword bucket.
   if (passwordParameters.useUppercase){
     for (var i=0; i<lettersUppercase.length; i++){
       generatedPassword += lettersUppercase[i];
     }
   }
 
+  // if the user clicked "OK" in the lower letters confirm() prompt, the for loop will iterate through the lettersLowercase array, adding the contents of each index to the generatedPassword bucket.
   if (passwordParameters.useLowercase){
     for (var i=0; i<lettersLowercase.length; i++){
       generatedPassword += lettersLowercase[i];
     }
   }
 
+  // now i am creating a new variable to store the final password. i set it as an emptry string for now, but it will be filled by picking and pulling random characters from the generatedPassword "bucket".
   var finalPassword = '';
 
 
+  // this for loop iterates through the length of the previously specified passwordLength, filling in each index with a randomly selected index of generatedPassword.
+  // randomIndex is a randomly generated number created using math.floor and math.random multiplied by the length of the generatedPassword array
+  // finalPassword is then filled using the random index value of(generatedPassword)
   for (var i=0; i<passwordLength; i++){
     var randomIndex = Math.floor(Math.random()*generatedPassword.length);
     finalPassword += generatedPassword[randomIndex];
   }
 
+  // return this generated password for use in writing back to the HTML
   return finalPassword;
 }
 
 
 // Write password to the #password input
+// the variable "password" is now containing the generatePassword function's return, finalPassword.
+// identifies the <textarea> element by "#password" ID, sets the selection to var passwordText.
+// passwordText's value (<textarea> in HTML) is set to password, thus displaying the password to the user.
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
@@ -146,7 +160,7 @@ function writePassword() {
 }
 
 // Add event listener to generate button
-// generateBtn.addEventListener("click", writePassword);
+// runs writePassword when the button is clicked.
 generateBtn.addEventListener("click", writePassword);
 
 
